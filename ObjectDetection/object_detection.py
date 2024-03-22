@@ -51,14 +51,14 @@ for img in os.listdir(path['IMG_DIR_PATH']):
             try: 
                 Path('runs').mkdir(parents=True, exist_ok=True)
                 Path(os.path.join('runs', 'segment')).mkdir(parents=True, exist_ok=True)
-                Path(os.path.join('runs', 'segment', 'inference_seg')).mkdir(parents=True, exist_ok=True)
                 Path(os.path.join('runs', 'segment', 'inference')).mkdir(parents=True, exist_ok=True)
                 Path(os.path.join('runs', 'segment', 'inference', 'crops_seg')).mkdir(parents=True, exist_ok=True)
                 Path(os.path.join('runs', 'segment', 'inference', 'enhanced')).mkdir(parents=True, exist_ok=True)
+                Path(os.path.join('runs', 'segment', 'inference', 'masks')).mkdir(parents=True, exist_ok=True)
             except OSError as error:  
                 print(error)
                 pass
             
-            cv2.imwrite(os.path.join('runs', 'segment', 'inference_seg')+ img, mask)
+            cv2.imwrite(os.path.join('runs', 'segment', 'inference', 'masks', img), mask)
             cv2.imwrite(os.path.join('runs', 'segment', 'inference', 'crops_seg', img), crop_img )
             cv2.imwrite(os.path.join('runs', 'segment', 'inference', 'enhanced', img), image )

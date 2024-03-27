@@ -4,7 +4,15 @@ import numpy as np
 import os 
 import re
 import pytesseract 
-pytesseract.pytesseract.tesseract_cmd = (r"C:\Program Files\Tesseract-OCR\tesseract.exe")
+from dotenv import load_dotenv
+from pathlib import Path
+env_path = Path('.') / '.env'
+
+load_dotenv(dotenv_path=env_path)
+path = {
+        'TESSERACT_PATH': str(os.getenv('TESSERACT_PATH')),
+        }
+pytesseract.pytesseract.tesseract_cmd = (path['TESSERACT_PATH'])
 
 
 

@@ -11,7 +11,7 @@ ocr = PaddleOCR(use_angle_cls=True, lang='en') # need to run only once to downlo
 
 load_dotenv(dotenv_path=env_path)
 path = {
-        'ROTATED_IMAGE_FOLDER_PATH': str(os.getenv('ROTATED_IMAGE_FOLDER_PATH_2')),
+        'ROTATED_IMAGE_FOLDER_PATH': str(os.getenv('ROTATED_IMAGE_FOLDER_PATH')),
         }
 # Traves rotated images  
 for img_name in os.listdir(path["ROTATED_IMAGE_FOLDER_PATH"]):

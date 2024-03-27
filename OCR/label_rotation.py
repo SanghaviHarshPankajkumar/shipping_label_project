@@ -8,7 +8,7 @@ env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
 path = {
-        'ENHANCED_IMAGE_FOLDER_PATH': str(os.getenv('ENHANCED_IMAGE_FOLDER_PATH_2')),
+        'ENHANCED_IMAGE_FOLDER_PATH': str(os.getenv('ENHANCED_IMAGE_FOLDER_PATH')),
         }
 
 import numpy as np
@@ -39,9 +39,9 @@ for img_name in os.listdir(path['ENHANCED_IMAGE_FOLDER_PATH']):
             Path('runs').mkdir(parents=True, exist_ok=True)
             Path(os.path.join('runs', 'segment')).mkdir(parents=True, exist_ok=True)
             Path(os.path.join('runs', 'segment', 'inference')).mkdir(parents=True, exist_ok=True)
-            Path(os.path.join('runs', 'segment', 'inference', 'rotated_images')).mkdir(parents=True, exist_ok=True)
+            Path(os.path.join('runs', 'segment', 'inference', 'rotated_image')).mkdir(parents=True, exist_ok=True)
         except OSError as error:  
             print(error)
             pass
         
-        cv2.imwrite(os.path.join('runs', 'segment', 'inference', 'rotated_images', img_name), rotated_image)
+        cv2.imwrite(os.path.join('runs', 'segment', 'inference', 'rotated_image', img_name), rotated_image)

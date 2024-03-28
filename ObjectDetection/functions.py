@@ -66,8 +66,9 @@ def generateMask(res, original_img):
     Returns:
         tupple (ndarray, ndarray): (crop_img, mask)
     """
+    
     try:
-        height,width,channel  = original_img.shape
+        height,width  = original_img.shape
         masks = res.masks.data
         boxes = res.boxes.data
         
@@ -76,6 +77,7 @@ def generateMask(res, original_img):
         # get indices of ress where class is 0 
         label_indices = torch.where(clss == 0)
         # use these indices to extract the relevant masks
+        print("INSIDE GENEARED")
         label_masks = masks[label_indices]
         # scale for visualizing ress
         label_mask = torch.any(label_masks, dim=0).int() * 255

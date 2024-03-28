@@ -11,4 +11,3 @@ def main(path):
     img_name = pytesseract_rotate(rotated_image, image, img_name)
     ocr(img_name)
     
-main('/media/prit/New Volume/AI/shipping_label_project/ObjectDetection/images/parcel_img13.png')

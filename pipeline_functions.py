@@ -39,6 +39,7 @@ def object_detection(file):
     
 def crop_image(seg_result, img_file, img_name):
     print("**************************** CROPPING_IMAGE **************************** ")
+    print(seg_result)
     for res in seg_result:
         
         croped_img, mask = generateMask(res, img_file)
@@ -59,9 +60,8 @@ def crop_image(seg_result, img_file, img_name):
                 
             cv2.imwrite(os.path.join('runs', 'segment', path['MAIN_FLOW_INFERENCE_FOLDER'], 'masks', img_name), mask)
             cv2.imwrite(os.path.join('runs', 'segment', path['MAIN_FLOW_INFERENCE_FOLDER'], 'crops_seg', img_name), croped_img )
-    
-        return croped_img
-    return None, None 
+            return croped_img
+    return img_file 
 
 def enhance_image(croped_img, img_name):
     print("**************************** ENHANCE_IMAGE **************************** ")
@@ -84,6 +84,7 @@ def enhance_image(croped_img, img_name):
     return image
 
 def morphological_transform(image):
+
     print("**************************** APPLY_MORPHOLOGICAL_TRANSFORM **************************** ")
     processed_img = cv2.resize(image,None,fx=2.7, fy=3)
     kernel = np.ones((2,2),np.uint8)
@@ -124,10 +125,12 @@ def ocr(img_name):
     result = ocr.ocr(os.path.join('runs', 'segment', path['MAIN_FLOW_INFERENCE_FOLDER'], 'rotated_image', img_name), cls=True)
     
     ocr_output_paddle = []
-    for i in result:
-        ocr_output_paddle.append(" ".join([line[1][0] for line in i]))
-
     if result is not None:
+        try:
+            for i in result:
+                ocr_output_paddle.append(" ".join([line[1][0] for line in i]))
+        except:
+            pass
         try: 
             Path('runs').mkdir(parents=True, exist_ok=True)
             Path(os.path.join('runs', 'segment')).mkdir(parents=True, exist_ok=True)
@@ -136,5 +139,5 @@ def ocr(img_name):
         except OSError as error:  
             print(error)
 
-    with open(os.path.join('runs', 'segment', path['MAIN_FLOW_INFERENCE_FOLDER'], 'ocr_label_data', img_name) +'.txt',"w+") as f:
+    with open(os.path.join('runs', 'segment', path['MAIN_FLOW_INFERENCE_FOLDER'], 'ocr_label_data', img_name.split('.')[0]) +'.txt',"w+") as f:
         f.write("\n".join(ocr_output_paddle))

@@ -39,7 +39,6 @@ def object_detection(file):
     
 def crop_image(seg_result, img_file, img_name):
     print("**************************** CROPPING_IMAGE **************************** ")
-    print(seg_result)
     for res in seg_result:
         
         croped_img, mask = generateMask(res, img_file)

@@ -26,6 +26,11 @@ if data:
         f.write(data.getvalue())
         
     img = cv2.imread(os.path.join('grey_images',data.name),0)
+    
+    if img.shape[0] > 1500:
+        height, width = img.shape 
+        img = img[height//4:-height//4, width//4:-width//4]
+    
     cv2.imwrite(os.path.join('grey_images',data.name), img)
 
     #call main function

@@ -15,7 +15,15 @@ def cropBlackBackground(img):
     try:
         _, binary = cv2.threshold(img, 1, 255, cv2.THRESH_BINARY)
         contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        x, y, w, h = cv2.boundingRect(contours[0])
+        
+        max_area_indx = 0
+        max_area = 0
+        for indx, contour in enumerate(contours):
+            area = cv2.contourArea(contour)
+            if area > max_area:
+                max_area_indx = indx
+        
+        x, y, w, h = cv2.boundingRect(contours[max_area_indx])
         img = img[y:y+h, x:x+w]
         return img
     except Exception as e:
@@ -79,12 +87,11 @@ def generateMask(res, original_img):
         # get indices of ress where class is 0 
         label_indices = torch.where(clss == 0)
         # use these indices to extract the relevant masks
-        print("INSIDE GENEARED")
         label_masks = masks[label_indices]
 
         
         # get maximum confidence label's mask
-        max_conf_label_mask = torch.empty(size=(1,512,640))
+        max_conf_label_mask = torch.empty(size=(1,label_masks[max_conf_index].shape[0],label_masks[max_conf_index].shape[1]))
         max_conf_label_mask[0]= label_masks[max_conf_index]
 
         # scale for visualizing ress

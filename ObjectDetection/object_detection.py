@@ -33,9 +33,10 @@ for img in os.listdir(path['IMG_DIR_PATH']):
     img_file = cv2.imread(os.path.join(path['IMG_DIR_PATH'],img),0)
     cv2.imwrite(os.path.join(path['IMG_DIR_PATH'],img),img_file)
     
-    result = seg_model(os.path.join(path['IMG_DIR_PATH'],img),conf = CONF,save = True,name = path['INFERENCE_FOLDER'],exist_ok = True)
+    result = seg_model(os.path.join(path['IMG_DIR_PATH'],img),save = True,name = path['INFERENCE_FOLDER'],exist_ok = True)
     
     original_img = cv2.imread(os.path.join(path['IMG_DIR_PATH'],img))
+    
     for res in result:
         crop_img, mask = generateMask(res, original_img)
         

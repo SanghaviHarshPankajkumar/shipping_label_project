@@ -6,6 +6,7 @@ from paddleocr import PaddleOCR
 
 from ObjectDetection.functions import generateMask, cropBlackBackground, enhanceImage
 from OCR.rotation_functions import hoffman_transformation, rotate, pytesseractRotate
+from NER.ner_inference import inference
 
 import os
 from dotenv import load_dotenv
@@ -138,5 +139,19 @@ def ocr(img_name):
         except OSError as error:  
             print(error)
 
-    with open(os.path.join('runs', 'segment', path['MAIN_FLOW_INFERENCE_FOLDER'], 'ocr_label_data', img_name.split('.')[0]) +'.txt',"w+") as f:
+    file_name = img_name.split('.')[0] +'.txt'
+    with open(os.path.join('runs', 'segment', path['MAIN_FLOW_INFERENCE_FOLDER'], 'ocr_label_data',file_name) ,"w+") as f:
         f.write("\n".join(ocr_output_paddle))
+    
+    return file_name
+def ner(file_name):
+    print("**************************** APPLY_NER **************************** ")
+    # print(file_name)
+    ocr_file = os.path.join('runs', 'segment',path['MAIN_FLOW_INFERENCE_FOLDER'],'ocr_label_data',file_name)
+    with open(ocr_file,'r+') as f:
+        sent = f.read()
+    print(sent)
+    output_dict = inference(sent)
+    
+    return output_dict
+ 

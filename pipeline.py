@@ -1,4 +1,4 @@
-from pipeline_functions import object_detection, crop_image, enhance_image, morphological_transform, hoffman_transform, pytesseract_rotate, ocr
+from pipeline_functions import object_detection, crop_image, enhance_image, morphological_transform, hoffman_transform, pytesseract_rotate, ocr,ner
 import os
 
 def main(path):
@@ -9,5 +9,6 @@ def main(path):
     processed_img = morphological_transform(image)
     rotated_image, image = hoffman_transform(processed_img, image)
     img_name = pytesseract_rotate(rotated_image, image, img_name)
-    ocr(img_name)
-    
+    file_name = ocr(img_name)
+    Output_dict = ner(file_name)
+    print(Output_dict)

@@ -1,4 +1,6 @@
 .venv
 
 OCR/.venv
+NER/final_model.pt
 temp.py
+runs

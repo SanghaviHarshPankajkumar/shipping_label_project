@@ -11,4 +11,4 @@ def main(path):
     img_name = pytesseract_rotate(rotated_image, image, img_name)
     file_name = ocr(img_name)
     Output_dict = ner(file_name)
-    print(Output_dict)
+    return Output_dict

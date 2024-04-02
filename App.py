@@ -2,6 +2,7 @@ import streamlit as st
 import cv2
 from pipeline import main
 from pathlib import Path
+import pandas as pd
 import os
 from dotenv import load_dotenv
 from pathlib import Path
@@ -34,8 +35,8 @@ if data:
     cv2.imwrite(os.path.join('grey_images',data.name), img)
 
     #call main function
-    main(os.path.join('grey_images',data.name))
-
+    Output_dict= main(os.path.join('grey_images',data.name))
+    df = pd.DataFrame(Output_dict)
 
     col1,col2 = st.columns(2)
 
@@ -55,3 +56,12 @@ if data:
         st.markdown("<h3 style='text-align: center;'>Rotated Image</h1>", unsafe_allow_html=True) 
         st.image(os.path.join('runs', 'segment', path['MAIN_FLOW_INFERENCE_FOLDER'], 'rotated_image', data.name))
 
+
+    ocr_data = ""
+    with open(os.path.join('runs', 'segment', path['MAIN_FLOW_INFERENCE_FOLDER'], 'ocr_label_data', data.name.split('.')[0]+'.txt'),'r+') as f :
+        ocr_data = f.read()
+    st.header("OCR Text Output")
+    st.text(ocr_data)
+
+    st.header("NER Output")
+    st.table(df)

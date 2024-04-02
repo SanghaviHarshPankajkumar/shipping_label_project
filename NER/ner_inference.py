@@ -32,12 +32,12 @@ def inference(sent):
         else:
             label_name[sorted_labels[0]['value']].append([label['text']])
 
-    print(label_name)
-    if label_name['GCNUM'] is None:
-        pattern = re.compile(r"\b{}\b".format("[G,O,Q][C,O,Q][0-9]{5}"))
-        result = pattern.search(sent)
-        if result is not None:
-            label_name['GCNUM'].append(result.group(0))
+    if label_name['GCNUM'] is None or len(label_name['GCNUM']) == 0:
+        pattern = r'[G,O,Q][C,O,Q]\d{5}'
+        result = re.findall(pattern, sent, re.IGNORECASE)
+
+        if result is not None and len(result) > 0:
+            label_name['GCNUM'].append(result[0])
     
     label_name['GCNUM'] = [json.dumps(label_name['GCNUM'])]
     label_name['TRACK-ID'] = [json.dumps(label_name['TRACK-ID'])]

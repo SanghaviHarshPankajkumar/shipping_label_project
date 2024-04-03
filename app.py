@@ -81,4 +81,6 @@ if data:
     st.text(ocr_data)
 
     st.header("NER Output")
+    df = df.T
+    df.columns = ['Value']
     st.table(df)

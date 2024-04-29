@@ -36,9 +36,9 @@ def inference(sent):
     for label in res['entities']:
         sorted_labels = sorted(label['labels'], key=lambda k: k['confidence']) 
         if sorted_labels[0]['value'] not in label_name:
-            label_name[sorted_labels[0]['value']].append([label['text']])
+            label_name[sorted_labels[0]['value']].append(label['text'])
         else:
-            label_name[sorted_labels[0]['value']].append([label['text']])
+            label_name[sorted_labels[0]['value']].append(label['text'])
 
     # RE part 
     if label_name['GCNUM'] is None or len(label_name['GCNUM']) == 0:
@@ -47,8 +47,8 @@ def inference(sent):
         if result is not None and len(result) > 0:
             label_name['GCNUM'].append(result[0])
     
-    label_name['GCNUM'] = [json.dumps(label_name['GCNUM'])]
-    label_name['TRACK-ID'] = [json.dumps(label_name['TRACK-ID'])]
+    label_name['GCNUM'] = label_name['GCNUM']
+    label_name['TRACK-ID'] = label_name['TRACK-ID']
     #getting companie name
     #1. get name directly from sentence
     label_name['Company'] = get_company_name(sent.lower())

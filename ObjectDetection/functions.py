@@ -30,7 +30,7 @@ def cropBlackBackground(img):
         print(e)
         return None
 
-def     enhanceImage(img, block_size: int = 19, constant: int = 5, adaptive_thresold_type = "GAUSSIAN", need_to_sharp: bool = True):
+def enhanceImage(img, block_size: int = 19, constant: int = 5, adaptive_thresold_type = "GAUSSIAN", need_to_sharp: bool = True):
     """Enhance image by appling adaptive thresolding and filter2D
 
     Args:

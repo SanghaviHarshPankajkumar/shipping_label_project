@@ -1,6 +1,7 @@
 .venv
 
 OCR/.venv
-NER/final_model.pt
+#NER/final_model.pt
 temp.py
 runs
+__pycache__
